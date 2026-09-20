@@ -1,56 +1,389 @@
+
 import streamlit as st
-from core import Blockchain # Mengimpor mesin Blockchain yang kita buat
+from core import Blockchain
 
-# --- KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="Blockchain Explorer", page_icon="🔗", layout="wide")
-st.title("📦 Blockchain for Halal Coffee Supply Chain")
 
-# --- SESSION STATE MANAGEMENT ---
-if 'my_blockchain' not in st.session_state:
+# ==========================================
+# KONFIGURASI HALAMAN
+# ==========================================
+
+st.set_page_config(
+    page_title="Blockchain Supply Chain",
+    page_icon="🔗",
+    layout="wide"
+)
+
+st.title("📦 Blockchain Supply Chain")
+st.caption(
+    "Sistem pencatatan rantai pasok menggunakan teknologi Blockchain"
+)
+
+
+# ==========================================
+# SESSION STATE
+# ==========================================
+
+if "my_blockchain" not in st.session_state:
     st.session_state.my_blockchain = Blockchain()
 
-# --- SIDEBAR: INPUT DATA ---
+
+# ==========================================
+# DATA STUDI KASUS
+# ==========================================
+
+studi_kasus = {
+    "☕ Kopi Halal": {
+        "produk": "Biji Kopi",
+        "aktor": "Petani Kopi",
+        "satuan": "Kg"
+    },
+
+    "🍚 Beras": {
+        "produk": "Beras",
+        "aktor": "Petani Padi",
+        "satuan": "Kg"
+    },
+
+    "🐟 Ikan": {
+        "produk": "Ikan Segar",
+        "aktor": "Nelayan",
+        "satuan": "Kg"
+    },
+
+    "🍫 Kakao": {
+        "produk": "Biji Kakao",
+        "aktor": "Petani Kakao",
+        "satuan": "Kg"
+    },
+
+    "🥩 Daging Halal": {
+        "produk": "Daging Sapi",
+        "aktor": "Peternak",
+        "satuan": "Kg"
+    },
+
+    "🥛 Susu": {
+        "produk": "Susu Segar",
+        "aktor": "Peternak Sapi",
+        "satuan": "Liter"
+    },
+
+    "🌾 Gandum": {
+        "produk": "Gandum",
+        "aktor": "Petani Gandum",
+        "satuan": "Kg"
+    },
+
+    "💊 Obat": {
+        "produk": "Obat",
+        "aktor": "Produsen Obat",
+        "satuan": "Box"
+    },
+
+    "👕 Tekstil": {
+        "produk": "Kain",
+        "aktor": "Produsen Tekstil",
+        "satuan": "Meter"
+    },
+
+    "📦 Distribusi Barang": {
+        "produk": "Barang",
+        "aktor": "Distributor",
+        "satuan": "Unit"
+    }
+}
+
+
+# ==========================================
+# SIDEBAR - PILIH STUDI KASUS
+# ==========================================
+
+st.sidebar.header("📋 Studi Kasus")
+
+pilihan_kasus = st.sidebar.selectbox(
+    "Pilih Studi Kasus:",
+    list(studi_kasus.keys())
+)
+
+data_kasus = studi_kasus[pilihan_kasus]
+
+st.sidebar.info(
+    f"""
+**Studi Kasus:**
+{pilihan_kasus}
+
+**Produk:**
+{data_kasus['produk']}
+
+**Aktor Awal:**
+{data_kasus['aktor']}
+"""
+)
+
+
+# ==========================================
+# SIDEBAR - INPUT DATA
+# ==========================================
+
 st.sidebar.header("✨ Tambah Data Baru")
 
-# Contoh Kasus: Rantai Pasok Kopi
-petani = st.sidebar.text_input("Nama Petani/Aktor:")
-jumlah_kopi = st.sidebar.number_input("Jumlah Panen (Kg):", min_value=1)
-lokasi = st.sidebar.text_input("Lokasi Kebun:")
+aktor = st.sidebar.text_input(
+    "Nama Petani/Aktor:",
+    value=data_kasus["aktor"]
+)
 
-if st.sidebar.button("Tambahkan ke Blockchain"):
-    if petani and lokasi:
-        # Mengemas data menjadi satu string JSON-like
-        data_transaksi = f"Petani: {petani} | Panen: {jumlah_kopi} Kg | Lokasi: {lokasi}"
-        # Memanggil method add_block dari Object yang ada di memori
-        st.session_state.my_blockchain.add_block(data_transaksi)
-        st.sidebar.success("Blok berhasil ditambahkan!")
+produk = st.sidebar.text_input(
+    "Nama Produk:",
+    value=data_kasus["produk"]
+)
+
+jumlah = st.sidebar.number_input(
+    f"Jumlah ({data_kasus['satuan']}):",
+    min_value=1,
+    value=1
+)
+
+lokasi = st.sidebar.text_input(
+    "Lokasi:"
+)
+
+status = st.sidebar.selectbox(
+    "Status Produk:",
+    [
+        "Diproduksi",
+        "Dipanen",
+        "Diproses",
+        "Diperiksa",
+        "Disimpan",
+        "Didistribusikan",
+        "Diterima Konsumen"
+    ]
+)
+
+sertifikasi = st.sidebar.selectbox(
+    "Status Sertifikasi:",
+    [
+        "Belum Diverifikasi",
+        "Terverifikasi",
+        "Halal Certified",
+        "Organik Certified"
+    ]
+)
+
+
+# ==========================================
+# TAMBAHKAN DATA KE BLOCKCHAIN
+# ==========================================
+
+if st.sidebar.button("⛓️ Tambahkan ke Blockchain"):
+
+    if aktor and produk and lokasi:
+
+        data_transaksi = (
+            f"Studi Kasus: {pilihan_kasus} | "
+            f"Aktor: {aktor} | "
+            f"Produk: {produk} | "
+            f"Jumlah: {jumlah} {data_kasus['satuan']} | "
+            f"Lokasi: {lokasi} | "
+            f"Status: {status} | "
+            f"Sertifikasi: {sertifikasi}"
+        )
+
+        st.session_state.my_blockchain.add_block(
+            data_transaksi
+        )
+
+        st.sidebar.success(
+            "✅ Blok berhasil ditambahkan!"
+        )
+
     else:
-        st.sidebar.error("Lengkapi semua data!")
 
-# --- MAIN AREA: VISUALISASI RANTAI ---
-st.subheader("📜 Blockchain Ledger (Buku Besar)")
+        st.sidebar.error(
+            "⚠️ Lengkapi semua data!"
+        )
 
-# Status Validitas Rantai
+
+# ==========================================
+# MAIN AREA
+# ==========================================
+
+st.subheader(
+    f"📜 Blockchain Ledger - {pilihan_kasus}"
+)
+
+st.write(
+    f"""
+Sistem ini mencatat perjalanan **{data_kasus['produk']}**
+dari proses produksi hingga distribusi menggunakan Blockchain.
+"""
+)
+
+
+# ==========================================
+# STATUS BLOCKCHAIN
+# ==========================================
+
 is_valid = st.session_state.my_blockchain.is_chain_valid()
-if is_valid:
-    st.success("✔️ Status Jaringan: Rantai Valid (Aman)")
-else:
-    st.error("❌ PERINGATAN: Integritas Rantai Rusak (Telah Dimanipulasi!)")
 
-# Menampilkan semua blok dengan Looping
+if is_valid:
+
+    st.success(
+        "✔️ Status Jaringan: Rantai Valid (Aman)"
+    )
+
+else:
+
+    st.error(
+        "❌ PERINGATAN: Integritas Rantai Rusak!"
+    )
+
+
+# ==========================================
+# INFORMASI STUDI KASUS
+# ==========================================
+
+st.subheader("📊 Informasi Studi Kasus")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Studi Kasus",
+        pilihan_kasus
+    )
+
+with col2:
+    st.metric(
+        "Produk",
+        data_kasus["produk"]
+    )
+
+with col3:
+    st.metric(
+        "Jumlah Block",
+        len(st.session_state.my_blockchain.chain)
+    )
+
+
+# ==========================================
+# ALUR SUPPLY CHAIN
+# ==========================================
+
+st.subheader("🔄 Alur Supply Chain")
+
+if "Kopi" in pilihan_kasus:
+
+    st.write(
+        "🌱 Petani → 🏭 Pengolahan → 🔍 Quality Control → "
+        "📦 Distributor → 🏪 Toko → 👤 Konsumen"
+    )
+
+elif "Beras" in pilihan_kasus:
+
+    st.write(
+        "🌾 Petani → 🏭 Penggilingan → 🔍 Quality Control → "
+        "📦 Distributor → 🏪 Toko → 👤 Konsumen"
+    )
+
+elif "Ikan" in pilihan_kasus:
+
+    st.write(
+        "🎣 Nelayan → 🧊 Penyimpanan → 🔍 Quality Control → "
+        "📦 Distributor → 🏪 Pasar → 👤 Konsumen"
+    )
+
+elif "Kakao" in pilihan_kasus:
+
+    st.write(
+        "🌱 Petani → 🏭 Pengolahan → 📦 Gudang → "
+        "🚚 Distributor → 🏪 Toko → 👤 Konsumen"
+    )
+
+elif "Daging" in pilihan_kasus:
+
+    st.write(
+        "🐄 Peternak → 🥩 Rumah Potong → 🔍 Pemeriksaan Halal → "
+        "📦 Pengemasan → 🚚 Distributor → 👤 Konsumen"
+    )
+
+elif "Susu" in pilihan_kasus:
+
+    st.write(
+        "🐄 Peternak → 🥛 Pengumpulan → 🏭 Pengolahan → "
+        "🧊 Penyimpanan → 🚚 Distributor → 👤 Konsumen"
+    )
+
+elif "Gandum" in pilihan_kasus:
+
+    st.write(
+        "🌾 Petani → 🏭 Pengolahan → 📦 Gudang → "
+        "🚚 Distributor → 🏪 Toko → 👤 Konsumen"
+    )
+
+elif "Obat" in pilihan_kasus:
+
+    st.write(
+        "🏭 Produsen → 🔬 Quality Control → 📦 Gudang → "
+        "🚚 Distributor → 🏥 Apotek → 👤 Konsumen"
+    )
+
+elif "Tekstil" in pilihan_kasus:
+
+    st.write(
+        "🌱 Bahan Baku → 🏭 Produksi → 🔍 Quality Control → "
+        "📦 Distributor → 🏪 Toko → 👤 Konsumen"
+    )
+
+else:
+
+    st.write(
+        "🏭 Produsen → 📦 Gudang → 🚚 Distributor → "
+        "🏪 Toko → 👤 Konsumen"
+    )
+
+
+# ==========================================
+# MENAMPILKAN BLOCKCHAIN
+# ==========================================
+
+st.subheader("🔗 Detail Blockchain")
+
 for block in st.session_state.my_blockchain.chain:
-    with st.expander(f"Blok #{block.index} | Hash: {block.hash[:15]}..."):
-        # Membuat 2 kolom untuk rapi
+
+    with st.expander(
+        f"Blok #{block.index} | Hash: {block.hash[:15]}..."
+    ):
+
         col1, col2 = st.columns(2)
-        
+
         with col1:
-            st.write("**Data Payload:**")
-            st.info(block.data)
-            st.write(f"**Timestamp:** {block.timestamp_readable}")
-            
+
+            st.write("**📦 Data Payload:**")
+
+            if block.index == 1:
+                st.info(block.data)
+            else:
+                st.success(block.data)
+
+            st.write(
+                f"**Timestamp:** {block.timestamp_readable}"
+            )
+
         with col2:
-            st.write("**Kriptografi:**")
-            st.write(f"**Hash Saat Ini:**")
-            st.code(block.hash, language='python')
-            st.write(f"**Hash Sebelumnya (Pointer):**")
-            st.code(block.prev_hash, language='python')
+
+            st.write("**🔐 Kriptografi:**")
+
+            st.write("**Hash Saat Ini:**")
+
+            st.code(
+                block.hash,
+                language="text"
+            )
+
+            st.write("**Hash Sebelumnya (Pointer):**")
+
+            st.code(
+                block.prev_hash,
+                language="text"
+            )
