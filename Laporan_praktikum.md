@@ -22,11 +22,12 @@ Pengujian dilakukan langsung melalui antarmuka Streamlit untuk memverifikasi dua
 
 1. Kondisi Rantai Valid (Normal)
 Pada tahap ini, data daur ulang sampah plastik (jenis material, bank sampah asal, pabrik pengolah, dan berat) diinputkan melalui sidebar. Setiap data baru otomatis terhubung dengan hash dari blok sebelumnya. Sistem menampilkan indikator hijau "*✔️ Status Jaringan: Terverifikasi (Klaim Ramah Lingkungan Asli & Bebas Manipulasi*)".
-![Terverifikasi](<Screenshot 2026-09-21 234801.png>)
+![Terverifikasi]<img width="1090" height="595" alt="image" src="https://github.com/user-attachments/assets/01ec3fd5-0216-49f7-8162-1222b6b17c50" />
 
 2. Simulasi Manipulasi Data (Peretasan)
 Pengujian keamanan dilakukan memanfaatkan fitur Simulasi Audit & Manipulasi Data. Salah satu data blok diubah secara paksa tanpa memperbarui hash-nya. Saat sistem melakukan validasi ulang, kalkulasi hash baru tidak cocok dengan hash yang tersimpan, sehingga Streamlit langsung menampilkan indikator merah "*❌ PERINGATAN: Ada Manipulasi Data! Potensi Pembohong Klaim Ramah Lingkungan Detected!*".
-![Manipulasi](<Screenshot 2026-09-21 234838.png>)
+![Manipulasi]<img width="1115" height="532" alt="image" src="https://github.com/user-attachments/assets/20270f68-af81-4491-afbb-1a6a7030a5bc" />
+
 
 ### Kesimpulan ###
 1. Penerapan arsitektur modular memudahkan pemisahan antara pemrosesan data blockchain (core.py) dan penyajian antarmuka pengguna (app.py).
