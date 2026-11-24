@@ -1,0 +1,344 @@
+/* ==========================================================================
+   global.css — Stylesheet dashboard dApp CertiChain
+   Sistem Verifikasi Sertifikat & Ijazah Digital Berbasis Blockchain
+   File ini standalone: cukup di-link dari index.html, tanpa dependensi lain.
+   <link rel="stylesheet" href="global.css">
+   ========================================================================== */
+
+/* ---------- Variabel tema CertiChain ---------- */
+:root {
+  --utama: #0f3d5e;
+  --utama-gelap: #09263b;
+  --utama-terang: #1d6fa5;
+  --utama-pucat: #e0f2fe;
+  --latar: #f8fafc;
+  --latar-aksen: #eef2f6;
+  --aksen: #d97706;
+  --aksen-terang: #fbbf24;
+  --aksen-tua: #92400e;
+  --teks: #1e293b;
+  --teks-redup: #64748b;
+  --garis: #cbd5e1;
+  --putih: #ffffff;
+  --merah: #b91c1c;
+  --merah-pucat: #fee2e2;
+  --hijau: #15803d;
+  --hijau-pucat: #dcfce7;
+  --biru: #1d4ed8;
+  --biru-pucat: #dbeafe;
+  --radius: 12px;
+  --bayangan: 0 2px 10px rgba(15, 61, 94, 0.08);
+}
+
+/* ---------- Reset ringan & dasar ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--teks);
+  background: var(--latar);
+}
+
+header {
+  background: linear-gradient(135deg, var(--utama-gelap) 0%, var(--utama) 100%);
+  color: var(--putih);
+  padding: 28px 20px 22px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  letter-spacing: 0.3px;
+}
+
+header .subtitle {
+  margin: 0;
+  color: var(--utama-pucat);
+  font-size: 0.98rem;
+}
+
+/* ---------- Menu navigasi (sticky) ---------- */
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 6px;
+  background: var(--utama-gelap);
+  padding: 10px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu a {
+  color: var(--aksen-terang);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.menu a:hover {
+  background: var(--utama-terang);
+  color: var(--putih);
+}
+
+/* Judul seksi tidak tertutup menu saat lompat lewat anchor. */
+section {
+  scroll-margin-top: 70px;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+footer {
+  text-align: center;
+  color: var(--teks-redup);
+  font-size: 0.85rem;
+  padding: 18px 16px 28px;
+}
+
+/* ---------- Kartu (satu seksi = satu kartu) ---------- */
+.card {
+  background: var(--putih);
+  border: 1px solid var(--garis);
+  border-radius: var(--radius);
+  box-shadow: var(--bayangan);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  color: var(--utama);
+  border-bottom: 2px solid var(--latar-aksen);
+  padding-bottom: 8px;
+}
+
+.card p {
+  margin: 8px 0;
+}
+
+.card small {
+  color: var(--teks-redup);
+}
+
+/* ---------- Form: input, select, tombol ---------- */
+label {
+  display: block;
+  font-weight: 600;
+  margin: 10px 0 4px;
+  color: var(--utama);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 4px 0 10px;
+  font: inherit;
+  color: var(--teks);
+  background: var(--latar);
+  border: 1px solid var(--garis);
+  border-radius: 8px;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--utama-terang);
+  outline-offset: 1px;
+  background: var(--putih);
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  color: var(--putih);
+  background: var(--utama);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  margin: 6px 6px 6px 0;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--utama-terang);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- Kartu data sertifikat / ijazah ---------- */
+.kartu {
+  background: var(--latar);
+  border: 1px solid var(--garis);
+  border-left: 5px solid var(--utama-terang);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
+.kartu strong {
+  color: var(--utama);
+}
+
+/* ---------- Badge status sertifikat (Valid / Dicabut) ---------- */
+.badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-valid {
+  background: var(--hijau-pucat);
+  color: var(--hijau);
+}
+
+.badge-dicabut {
+  background: var(--merah-pucat);
+  color: var(--merah);
+}
+
+/* ---------- Feed event ---------- */
+#elFeed {
+  margin-top: 12px;
+}
+
+#elFeed .item {
+  background: var(--latar);
+  border: 1px solid var(--garis);
+  border-left: 5px solid var(--aksen);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+#elFeed .item small {
+  color: var(--teks-redup);
+}
+
+#elFeed .feed-judul {
+  font-weight: 700;
+  color: var(--utama);
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+#elFeed .feed-meta {
+  font-size: 0.85rem;
+  color: var(--teks-redup);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Status transaksi: signing -> pending -> confirmed / gagal ---------- */
+.tx {
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-weight: 600;
+  background: var(--latar-aksen);
+  border: 1px solid var(--garis);
+  word-break: break-word;
+}
+
+.tx-signing {
+  background: #fef3c7;
+  border-color: var(--aksen);
+  color: var(--aksen-tua);
+}
+
+.tx-pending {
+  background: var(--biru-pucat);
+  border-color: var(--biru);
+  color: var(--biru);
+}
+
+.tx-confirmed {
+  background: var(--hijau-pucat);
+  border-color: var(--hijau);
+  color: var(--hijau);
+}
+
+.tx-gagal {
+  background: var(--merah-pucat);
+  border-color: var(--merah);
+  color: var(--merah);
+}
+
+/* ---------- Tabel ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--garis);
+}
+
+th {
+  background: var(--utama);
+  color: var(--putih);
+}
+
+tr:nth-child(even) td {
+  background: var(--latar);
+}
+
+/* ---------- Responsif ---------- */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.45rem;
+  }
+
+  main {
+    padding: 14px 10px 36px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  button {
+    width: 100%;
+    margin: 6px 0;
+  }
+}

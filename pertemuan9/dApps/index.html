@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CertiChain — Verifikasi Sertifikat &amp; Ijazah On-Chain</title>
+    <link rel="stylesheet" href="global.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>CertiChain</h1>
+        <p class="subtitle">Sistem Verifikasi Sertifikat &amp; Ijazah Digital Berbasis Blockchain</p>
+    </header>
+
+    <nav class="menu">
+        <a href="#seksi-wallet">Wallet</a>
+        <a href="#seksi-verifikasi">Verifikasi</a>
+        <a href="#seksi-terbitkan">Terbitkan</a>
+        <a href="#seksi-cabut">Cabut</a>
+        <a href="#seksi-mahasiswa">Daftar Mahasiswa</a>
+        <a href="#seksi-feed">Live Feed</a>
+    </nav>
+
+    <main>
+        <!-- ===== Connect Wallet & Info Admin ===== -->
+        <section class="card" id="seksi-wallet">
+            <h2>Connect Wallet</h2>
+            <button id="btnConnect">Connect Wallet</button>
+            <p>Address: <span id="address">-</span></p>
+            <p>Saldo: <span id="saldo">-</span></p>
+            <p>Admin Kampus: <span id="adminAddress">-</span></p>
+        </section>
+
+        <!-- ===== Verifikasi Ijazah / Sertifikat ===== -->
+        <section class="card" id="seksi-verifikasi">
+            <h2>Verifikasi Ijazah On-Chain</h2>
+            <label for="nomorVerifikasi">Nomor Ijazah</label>
+            <input id="nomorVerifikasi" placeholder="Contoh: IJZ-2026-001" value="IJZ-2026-001">
+            <button id="btnMuat">Verifikasi Ijazah</button>
+            <p>Status: <span id="status">-</span></p>
+            <div id="detailSertifikat"></div>
+        </section>
+
+        <!-- ===== Terbitkan Ijazah (Khusus Admin Kampus) ===== -->
+        <section class="card" id="seksi-terbitkan">
+            <h2>Terbitkan Ijazah Baru</h2>
+            <label for="nomorIjazah">Nomor Ijazah</label>
+            <input id="nomorIjazah" placeholder="Contoh: IJZ-2026-002">
+
+            <label for="namaPemilik">Nama Pemilik</label>
+            <input id="namaPemilik" placeholder="Nama lengkap pemilik ijazah">
+
+            <label for="programStudi">Program Studi</label>
+            <input id="programStudi" placeholder="Contoh: Informatika">
+
+            <label for="hashDokumen">Hash Dokumen</label>
+            <input id="hashDokumen" placeholder="Hash SHA-256 / IPFS dokumen">
+
+            <label for="alamatMahasiswa">Alamat Wallet Mahasiswa</label>
+            <input id="alamatMahasiswa" placeholder="Alamat wallet mahasiswa (0x...)">
+
+            <button id="btnDaftar">Terbitkan Ijazah</button>
+            <p id="elPanen" class="tx">Belum ada ijazah diterbitkan.</p>
+            <p><small>Hanya akun Admin Kampus (deployer kontrak) yang dapat menerbitkan ijazah.</small></p>
+        </section>
+
+        <!-- ===== Cabut Ijazah (Khusus Admin Kampus) ===== -->
+        <section class="card" id="seksi-cabut">
+            <h2>Cabut Ijazah</h2>
+            <label for="nomorCabut">Nomor Ijazah</label>
+            <input id="nomorCabut" placeholder="Nomor ijazah yang akan dicabut">
+
+            <label for="alasanCabut">Alasan Pencabutan</label>
+            <input id="alasanCabut" placeholder="Masukkan alasan pencabutan">
+
+            <button id="btnKirim">Cabut Ijazah</button>
+            <p id="elTx" class="tx">Belum ada transaksi pencabutan.</p>
+        </section>
+
+        <!-- ===== Daftar Ijazah Milik Mahasiswa ===== -->
+        <section class="card" id="seksi-mahasiswa">
+            <h2>Daftar Ijazah Mahasiswa</h2>
+            <label for="alamatCariMahasiswa">Alamat Wallet Mahasiswa</label>
+            <input id="alamatCariMahasiswa" placeholder="Kosongkan untuk memakai address wallet aktif (0x...)">
+            <button id="btnRefresh">Muat Daftar Ijazah</button>
+            <p>Jumlah Ijazah: <span id="jumlah">-</span></p>
+            <div id="daftar"></div>
+        </section>
+
+        <!-- ===== Live Feed Event ===== -->
+        <section class="card" id="seksi-feed">
+            <h2>Live Feed &mdash; Event Sertifikat</h2>
+            <label for="filterNomorFeed">Filter Nomor Ijazah</label>
+            <input id="filterNomorFeed" placeholder="Kosongkan untuk menampilkan semua event">
+            <button id="btnFilterFeed">Tampilkan Feed</button>
+            <div id="elFeed"></div>
+        </section>
+    </main>
+
+    <footer>
+        CertiChain &middot; Sistem Verifikasi Sertifikat &amp; Ijazah Digital Berbasis Blockchain
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,12 +1,5 @@
 # INTEGRASI FRONT END DAN WEB3 #
 
-## TUJUAN PRAKTIKUM ##
-1. Mahasiswa memahami arsitektur dApp: frontend, wallet, provider (RPC node), dan smart contract.
-2. Mahasiswa mampu menghubungkan aplikasi web ke wallet MetaMask (tombol Connect Wallet).
-3. Mahasiswa mampu membaca data on-chain: address pengguna dan saldo ETH.
-4. Mahasiswa mampu membaca satu data dari smart contract kelompoknya sendiri melalui ABI.
-5. Mahasiswa memahami aturan keamanan wallet: seed phrase dan private key tidak pernah dibagikan.
-
 ## LANGKAH PRAKTIKUM ## 
 
 1. Cek Instalasi Node dan Npm (node -v, npm -v)q
@@ -27,6 +20,7 @@
     ```
 7. Install framework Hardhat
 npm install --save-dev hardhat
+
 <img src="image-2.png" width=80% /> 
 
 8. Menjalankan hardhart(npx hardhart init)
@@ -36,6 +30,36 @@ npm install --save-dev hardhat
 <img src="image-5.png" width=80% />
 
 10. Compile projek dApps perintah ( npx hardhat compile )
+    
 <img src="image-6.png" width=80% />
 
-11. 
+
+11. Menjalankan Node untuk mendapatkan aktor dan address (npx hardhat  --> node)
+<img src="image-8.png" width=90% />
+
+12. Membuat file deploy.js difolder scripts
+
+<img src="image-11.png" width=90% />
+
+13. Deploy node ke local npx hardhat run scripts/deploy.js --network localhost
+
+<img src="image-9.png" width=90% />
+
+14. Membuat File index.html
+
+<img src="image-10.png" width=60% />
+
+15. Install ekstension meta mask
+
+<img src="image-7.png" width=90% />
+
+16. Login / Create Akun Via Oauth GMail
+17. Create Custom Network dengan nama Hardhat Local
+18. Import Custom account via private key (Private key di dapat di terminal VScode)
+19. Jalankan Index.html (npx serve .)
+
+<img src="image-12.png" width=90% />
+
+20. Hasil sudah Koneksi
+
+<img src="image-13.png" width=90% />
