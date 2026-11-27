@@ -21,17 +21,14 @@
 7. Install framework Hardhat
 npm install --save-dev hardhat
 
-<img src="image-2.png" width=80% /> 
-
 8. Menjalankan hardhart(npx hardhart init)
-<img src="image-4.png" width=100% />
+<img src="image-1.png" width=100% />
 
 9. unduh dan tempatkan file smart contract yang sudah dibuat remix ke folder contract
-<img src="image-5.png" width=80% />
 
 10. Compile projek dApps perintah ( npx hardhat compile )
     
-<img src="image-6.png" width=80% />
+<img src="image-2.png" width=80% />
 
 
 11. Menjalankan Node untuk mendapatkan aktor dan address (npx hardhat  --> node)
